@@ -32,7 +32,7 @@ module TestBench;
     // Monitor results
     initial begin
         $display("                Time   CellA   Result\n");
-        $monitor($time, "       %h  %h", IW.cellA.pixelMatrix[0][0], result);
+        $monitor($time, "       %h  %h", IW.cellA, result);
     end
 
     // Setup a struct to use for testing the cells
@@ -56,8 +56,8 @@ module TestBench;
         repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
                                          IW.cellB.pixelMatrix[i][j] = lime;
                                      end
-        repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
-                                         IW.cellB.pixelMatrix[i][j] = blue;
+        repeat (2) @(negedge clk);   foreach (IW.cellA.pixelMatrix[i,j]) begin
+                                         IW.cellBA.pixelMatrix[i][j] = blue;
                                      end
         repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
                                          IW.cellB.pixelMatrix[i][j] = red;
