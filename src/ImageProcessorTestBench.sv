@@ -3,15 +3,16 @@
 
 module TestBench;
     // Bring in the ImageProcessorPkg
-    import ImageProcessPkg::*;
+    import ImageProcessingPkg::*;
     
     // Establish registers/wires for using the Image Processor Core
     reg clk;
     pixelMatrix_t result;
     instruction_t IW;
+    opcodes_t opcodes;
 
     // Parameters for timing
-    parameter CLOCK_CYCLE   = 10ns;             // Using time value suffix for 10 nanoseconds
+    parameter CLOCK_CYCLE   = 10;             // Using time value suffix for 10 nanoseconds
     parameter IDLE_CLOCKS   = 2;
     localparam CLOCK_WIDTH  = CLOCK_CYCLE/2;
 
@@ -35,25 +36,26 @@ module TestBench;
     end
 
     // Setup a struct to use for testing the cells
-    typedef enum {
+    enum logic [23:0]{
         black   = 24'h000000,
         white   = 24'hFFFFFF,
         red     = 24'hFF0000,
         lime    = 24'h00FF00,
         blue    = 24'h0000FF
     } colors_t;
-    colors_t colors;
 
     // Generate stimulus
     initial begin
-        			                 IW.cellA.pixel; 		      IW.cellB = 0;
-        repeat (2) @(negedge Clock); IW.cellA = 1;                IW.cellB = 1;                IW.x = 0;   IW.y = 0;   	IW.opcode = ADD;
-        repeat (2) @(negedge Clock); IW.cellA = $realtobits(1.1); IW.cellB = $realtobits(1.1);   
-        repeat (2) @(negedge Clock); IW.cellA = $realtobits(1.1); IW.cellB = $realtobits(1.1);        			IW.opcode = MUL;
-        repeat (2) @(negedge Clock); IW.cellA = 0;                IW.cellB = 0;                IW.x = 1.1; IW.y = 1.1; 	IW.opcode = CREATE;
-        repeat (2) @(negedge Clock); IW.cellA = $realtobits(1.1); IW.cellB = 0;                IW.x = 0;   IW.y = 0;   	IW.opcode = PRINT;
-        repeat (4) @(negedge Clock);
-        $stop;
+                                     foreach ( IW.cellA.pixelMatrix[i,j] ) begin
+                                         IW.cellA.pixelMatrix[i][j] = black;
+                                     end
+                                     foreach (IW.cellB.pixelMatrix[i,j]) begin
+                                         IW.cellB.pixelMatrix[i][j] = black;
+                                     end
+                                     IW.opcode = ADD; 
+        repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
+                                         IW.cellB.pixelMatrix[i][j] = lime;
+                                     end
     end
 
 

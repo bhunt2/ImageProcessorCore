@@ -28,3 +28,6 @@ sim/vsim.wlf
 sim/output.txt
 sim/wlf*
 sim/*.xpr
+sim/*.cache
+sim/*.runs
+sim/*.sim

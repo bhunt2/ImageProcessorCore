@@ -3,6 +3,7 @@
 // // Definitions for real and imaginary parts of complex number
 `define ChannelWidth 7:0
 `define CellSize 2:0
+`define CellWidth 215:0
 
 package ImageProcessingPkg;
 
@@ -16,18 +17,20 @@ package ImageProcessingPkg;
 	typedef logic [`ChannelWidth] userInput;
 
 	// type definition for a pixel
-	typedef union {
-		colorChannel red, green, blue;
-		colorChannel [2:0] pixel;
+	typedef struct packed{
+		colorChannel red;
+		colorChannel green;
+		colorChannel blue;
 	} pixel_t;
 	
 	// type definition for a pixelMatrix or cell
-	typedef union {
+	typedef union packed{
 		pixel_t [`CellSize][`CellSize] pixelMatrix; 
+		logic [`CellWidth] singleCell;
 	} pixelMatrix_t;
 	
     // type definition for instructions
-    typedef struct {
+    typedef struct packed{
 		pixelMatrix_t cellA;
 		pixelMatrix_t cellB;
 		userInput userInputA;
@@ -38,10 +41,10 @@ package ImageProcessingPkg;
     function automatic pixelMatrix_t add (pixelMatrix_t cellA, cellB);
         
 		// Add each pixel in cellA to corresponding pixel in cellB
-		foreach ( cellA[i,j] ) begin
-			cellA[i][j].red      += cellB[i][j].red;
-			cellA[i][j].green    += cellB[i][j].green;
-			cellA[i][j].blue     += cellB[i][j].blue;
+		foreach ( cellA.pixelMatrix[i,j] ) begin
+			cellA.pixelMatrix[i][j].red      += cellB.pixelMatrix[i][j].red;
+			cellA.pixelMatrix[i][j].green    += cellB.pixelMatrix[i][j].green;
+			cellA.pixelMatrix[i][j].blue     += cellB.pixelMatrix[i][j].blue;
 		end
         
         // Return result
