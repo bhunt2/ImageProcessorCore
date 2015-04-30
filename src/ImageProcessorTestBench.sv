@@ -56,6 +56,12 @@ module TestBench;
         repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
                                          IW.cellB.pixelMatrix[i][j] = lime;
                                      end
+        repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
+                                         IW.cellB.pixelMatrix[i][j] = blue;
+                                     end
+        repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
+                                         IW.cellB.pixelMatrix[i][j] = red;
+                                     end
     end
 
 
