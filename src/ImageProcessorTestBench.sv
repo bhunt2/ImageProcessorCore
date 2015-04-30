@@ -31,8 +31,8 @@ module TestBench;
     
     // Monitor results
     initial begin
-        $display("                Time  Result    CellA    CellB  Result\n");
-        $monitor($time, "       %f  %f  %f", IW.cellA, IW.cellB, result);
+        $display("                Time   CellA   Result\n");
+        $monitor($time, "       %h  %h  %h", IW.cellA.pixelMatrix[0][0], result);
     end
 
     // Setup a struct to use for testing the cells
