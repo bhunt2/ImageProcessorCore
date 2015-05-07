@@ -9,8 +9,10 @@ module CellProcessor(
 	input clk,
 	input rst,
 	input instruction_t IW,
-	output reg pixel_t result
+	output pixel_t result
 );
+
+	reg [channelDepth - 1:0] result;
 	
     // Always block for operating on the current input values
     always_comb begin
