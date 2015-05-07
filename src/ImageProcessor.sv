@@ -18,6 +18,9 @@ module ImageProcessor(
 			result = `b0;
         case (IW.opcode)
             ADD :   result = add(IW.cellA, IW.cellB);
+            ADDI:   result = addi(IW.cellA, IW.userInputA);
+            SUB :   result = sub(IW.cellA, IW.cellB);
+            SUBI:   result = subi(IW.cellA, IW.userInputA);
         endcase
     end
 
