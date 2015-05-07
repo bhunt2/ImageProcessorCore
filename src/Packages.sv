@@ -10,9 +10,10 @@ package CellProcessingPkg;
 	parameter cellN			= 3;
 	parameter cellDepth		= channelDepth * cellN * cellN;
 	parameter centerPixel	= (cellN - 1) >> 1;
+	parameter divShift		= $clog2(cellN * cellN);
 
     // type definition enumeration for opcodes
-    typedef enum logic [opCodeWidth - 1:0] {ADD, ADDI, SUB, SUBI, MULT, MULTI, DIV2, INV, AND, OR, NOR} opcodes_t;
+    typedef enum logic [opCodeWidth - 1:0] {ADD, ADDI, SUB, SUBI, MULT, MULTI, DIV2, INV, AND, OR, NOR, AVG} opcodes_t;
 
     // type definition for color channel
     typedef logic [channelWidth - 1:0] colorChannel_t;
@@ -93,6 +94,30 @@ package CellProcessingPkg;
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel][centerPixel];
+    endfunction
+	
+	// Function for averaging all pixels within a cell
+	// Inputs: pixelMatrix_t
+	// Output: pixel_t
+    function automatic pixel_t avg (cell_t cellA);
+        // variable for storing the sum for output
+		integer redSum, greenSum, blueSum;
+		
+        // Sum pixels within a cell
+		foreach (cellA.pixelMatrix[x][y]) begin
+			redSum 		+= cellA.pixelMatrix[x][y].red;
+			greenSum 	+= cellA.pixelMatrix[x][y].green;
+			blueSum		+= cellA.pixelMatrix[x][y].blue;
+		end
+		
+		// Divide for average
+		// This uses a predefined parameter using 
+		redSum 		>>>= divShift;
+		greenSum 	>>>= divShift;
+		blueSum 	>>>= divShift;
+		
+		// Return result
+        return {redSum,greenSum,blueSum};
     endfunction
 endpackage
 
