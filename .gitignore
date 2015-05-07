@@ -31,3 +31,5 @@ sim/*.xpr
 sim/*.cache
 sim/*.runs
 sim/*.sim
+sim/vivado.*
+sim/IPCore.hw
