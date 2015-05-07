@@ -6,11 +6,16 @@
 # Make methods when using veloce
 vall: vclean vlib vanalyze vmwclk vcompile vrun vview  
 
+vserver:
+	
+	
+vwhoison:
+	whoison -emul velocesolo1
+	
 
 vlib: 
 	vellib work
-	velmap work ./work 
-	
+	velmap work ./work 	
 	
 vanalyze: vlib
 	-velcomp
