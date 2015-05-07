@@ -104,7 +104,7 @@ package CellProcessingPkg;
 		integer redSum, greenSum, blueSum;
 		
         // Sum pixels within a cell
-		foreach (cellA.pixelMatrix[x][y]) begin
+		foreach (cellA.pixelMatrix[x,y]) begin
 			redSum 		+= cellA.pixelMatrix[x][y].red;
 			greenSum 	+= cellA.pixelMatrix[x][y].green;
 			blueSum		+= cellA.pixelMatrix[x][y].blue;

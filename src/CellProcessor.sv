@@ -22,6 +22,7 @@ module CellProcessor(
                 ADDI:   result  = addi(IW.cellA, IW.userInputA);
                 SUB :   result  = sub(IW.cellA, IW.cellB);
                 SUBI:   result  = subi(IW.cellA, IW.userInputA);
+				AVG:	reslut	= avg(IW.cellA);
                 default: result = IW.cellA.pixelMatrix[centerPixel][centerPixel];
             endcase
         end
