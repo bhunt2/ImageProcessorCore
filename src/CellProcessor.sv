@@ -9,7 +9,7 @@ module CellProcessor(
 	input clk,
 	input rst,
 	input instruction_t IW,
-	output pixel_t result
+	output reg pixel_t result
 );
 	
     // Always block for operating on the current input values
