@@ -33,3 +33,6 @@ sim/*.runs
 sim/*.sim
 sim/vivado.*
 sim/IPCore.hw
+sim/*.map
+sim/*.med
+sim/*.ini
