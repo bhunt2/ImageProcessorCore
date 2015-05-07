@@ -15,6 +15,8 @@ module ImageProcessor(
 
     // Always block for operating on the current input values
     always_comb begin
+		if (rst)
+			result = `b0;
         case (IW.opcode)
             ADD :   result  = add(IW.cellA, IW.cellB);
             ADDI:   result  = addi(IW.cellA, IW.userInputA);
