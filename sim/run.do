@@ -1,30 +1,14 @@
 configure -emul velocesolo1
 
-reg setvalue simple_alu.reset 1
+reg setvalue CellProcessor.rst 1
 run 10
 
-reg setvalue simple_alu.reset 0
+reg setvalue CellProcessor.rst 0
 run 10
 
-reg setvalue simple_alu.operandA 8'h4
-reg setvalue simple_alu.operandB 8'h4
-reg setvalue simple_alu.opcode 2'h0
-run 1
-
-
-reg setvalue simple_alu.operandA 8'h4
-reg setvalue simple_alu.operandB 8'h4
-reg setvalue simple_alu.opcode 2'h1
-run 1
-
-reg setvalue simple_alu.operandA 8'hF
-reg setvalue simple_alu.operandB 8'h7
-reg setvalue simple_alu.opcode 2'h2
-run 1
-
-reg setvalue simple_alu.operandA 8'h4
-reg setvalue simple_alu.operandB 8'h1
-reg setvalue simple_alu.opcode 2'h3
+reg setvalue CellProcessor.IW.cellA 216'h0
+reg setvalue CellProcessor.IW.cellB 216'hffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff
+reg setvalue CellProcessor.opcode 2'h0
 run 1
 
 upload -tracedir ./veloce.wave/wave1
