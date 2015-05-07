@@ -3,13 +3,13 @@
 
 module TestBench;
     // Bring in the ImageProcessorPkg
-    import ImageProcessingPkg::*;
+    import CellProcessingPkg::*;
     
     // Establish registers/wires for using the Image Processor Core
     reg clk;
-    pixelMatrix_t result;
+    reg rst;
+    pixel_t result;
     instruction_t IW;
-    opcodes_t opcodes;
 
     // Parameters for timing
     parameter CLOCK_CYCLE   = 10;             // Using time value suffix for 10 nanoseconds
@@ -31,8 +31,8 @@ module TestBench;
     
     // Monitor results
     initial begin
-        $display("                Time   CellA   Result\n");
-        $monitor($time, "       %h  %h", IW.cellA, result);
+        $display("                Time   OpCode     CellACenterPixel       CellBCenterPixel        Result\n");
+        $monitor($time, "       %h      %h  %h      %h", IW.opcode, IW.cellA.pixelMatrix[centerPixel][centerPixel], IW.cellB.pixelMatrix[centerPixel][centerPixel], result);
     end
 
     // Setup a struct to use for testing the cells
@@ -52,7 +52,9 @@ module TestBench;
                                      foreach (IW.cellB.pixelMatrix[i,j]) begin
                                          IW.cellB.pixelMatrix[i][j] = black;
                                      end
-                                     IW.opcode = ADD; 
+                                     IW.opcode = ADD;
+                                     rst = 1;
+        repeat (2) @(negedge clk);   rst = 0;
         repeat (2) @(negedge clk);   foreach (IW.cellB.pixelMatrix[i,j]) begin
                                          IW.cellB.pixelMatrix[i][j] = lime;
                                      end
@@ -65,7 +67,7 @@ module TestBench;
     end
 
 
-    // Instantiate the Image Processor Core
-    ImageProcessor IPCore (clk, IW, result);
+    // Instantiate a single cell processor
+    CellProcessor cellCore (clk, rst, IW, result);
 
 endmodule

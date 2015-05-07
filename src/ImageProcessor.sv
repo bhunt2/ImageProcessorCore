@@ -7,17 +7,20 @@ import ImageProcessingPkg::*;
 
 module ImageProcessor(
 	input clk,
-	input instruction_t IW,
-	output pixelMatrix_t result
+	input rst,
+	input 
+	input opcodes_t opcode,
+	output  result
 );
 
     // Always block for operating on the current input values
     always_comb begin
         case (IW.opcode)
-            ADD :   result = add(IW.cellA, IW.cellB);
-            ADDI:   result = addi(IW.cellA, IW.userInputA);
-            SUB :   result = sub(IW.cellA, IW.cellB);
-            SUBI:   result = subi(IW.cellA, IW.userInputA);
+            ADD :   result  = add(IW.cellA, IW.cellB);
+            ADDI:   result  = addi(IW.cellA, IW.userInputA);
+            SUB :   result  = sub(IW.cellA, IW.cellB);
+            SUBI:   result  = subi(IW.cellA, IW.userInputA);
+            default: result = IW.cellA.pixelMatrix[centerPixel][centerPixel];
         endcase
     end
 
