@@ -102,6 +102,7 @@ package ImageProcessingPkg;
 	import CellProcessingPkg::pixel_t;
 	import CellProcessingPkg::centerPixel;
 	import CellProcessingPkg::opcodes_t;
+	import CellProcessingPkg::userInput_t;
 	
 	// Parameters for building an image
 	parameter imageWidth 	= 640;

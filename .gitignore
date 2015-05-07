@@ -31,4 +31,3 @@ sim/*.xpr
 sim/*.cache
 sim/*.runs
 sim/*.sim
-sim/*.config
