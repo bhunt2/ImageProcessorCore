@@ -1,35 +1,54 @@
-#Makefile for Legacy ICE Mode (Standalone) for ImageProcessor
-#Image Processor Core
-#Author-Benjamin Huntsman 2015
+# Makefile for Legacy ICE Mode (Standalone) use of Veloce
+# and for questa sim
+# Image Processor Core
+# Author-Benjamin Huntsman 2015
 
-all: clean lib analyze vmwclk compile run view  
+# Make methods when using veloce
+vall: vclean vlib vanalyze vmwclk vcompile vrun vview  
 
 
-lib: 
+vlib: 
 	vellib work
 	velmap work ./work 
 	
 	
-analyze: lib
+vanalyze: vlib
 	-velcomp
 	@echo -e "\nMakeInfo: You may get an error informing vmw.clk.generated file is missing if you are running this the first time. \n\tThis is normal, do not panic! You will generate this file using GUI in the next step\n"
 	
-vmwclk: analyze
+vmwclk: vanalyze
 	@echo -e "\nMakeInfo: Now Use velview to create vmw.clk clock/IO specification file. Follow steps from Standalone Flow guide. \n\t\tPress enter to continue....."
 	@read
 	velview 
 	
-compile: vmwclk
+vcompile: vmwclk
 	velcomp -start_after rtlc 
 	
-run: compile
+vrun: vcompile
 	velrun -nac -c -do run.do
 	@echo -e "\nMakeInfo: Emulation run successful!"
 	
-view: run
+vview: vrun
 	@echo -e "\nMakeInfo: Will open velview GUI now and add wave/signals using do file"
 	velview -do view.do
-	
-clean:
+
+vclean:
 	rm -rf edsenv debussy.cfg DEBUG_AllBoardsInfos_Host_0.txt veloce.log veloce.med veloce.map veloce.wave velrunopts.ini work 
 
+#Make methods when using questa
+qall: qclean qlib qcompile qrun
+
+
+qlib: 
+	vlib work	
+	
+qcompile: lib
+	vlog -f compile_list.txt
+	@echo -e "Compiling project."
+	
+qrun: compile
+	vsim -c TestBench
+	@echo -e "Running project."
+	
+qclean:
+	rm -rf ./work transcript
