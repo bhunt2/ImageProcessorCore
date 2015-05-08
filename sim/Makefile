@@ -40,7 +40,7 @@ vrun:
 	@echo -e "\nMakeInfo: Emulation run successful!"
 
 #View the wave diagram
-vview: vrun
+vview:
 	@echo -e "\nMakeInfo: Will open velview GUI now and add wave/signals using do file"
 	velview -do view.do
 
