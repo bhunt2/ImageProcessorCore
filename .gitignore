@@ -32,7 +32,7 @@ sim/*.cache
 sim/*.runs
 sim/*.sim
 sim/vivado.*
-sim/IPCore.hw
+sim/IPCore.*
 sim/*.map
 sim/*.med
 sim/*.ini
