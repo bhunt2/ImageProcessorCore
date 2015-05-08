@@ -1,0 +1,103 @@
+#-----------------------------------------------------------
+# Vivado v2015.1 (64-bit)
+# SW Build 1215546 on Mon Apr 27 19:22:08 MDT 2015
+# IP Build 1209967 on Tue Apr 21 11:39:20 MDT 2015
+# Start of session at: Fri May 08 00:50:05 2015
+# Process ID: 6664
+# Log file: D:/Repos/ImageProcessorCore/sim/Nexys4/Nexys4.runs/synth_1/Nexys4fpga.vds
+# Journal file: D:/Repos/ImageProcessorCore/sim/Nexys4/Nexys4.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Nexys4fpga.tcl -notrace
+Command: synth_design -top Nexys4fpga -part xc7a100tcsg324-3
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+WARNING: [Synth 8-2507] parameter declaration becomes local in debounce with formal parameter declaration list [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:45]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:15 ; elapsed = 00:01:26 . Memory (MB): peak = 249.125 ; gain = 73.098
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Nexys4fpga' [D:/Repos/ImageProcessorCore/src/ImageProcessorCore.sv:24]
+	Parameter SIMULATE bound to: 0 - type: integer 
+	Parameter RESET_POLARITY_LOW bound to: 1 - type: integer 
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [D:/Repos/ImageProcessorCore/src/ImageProcessorCore.sv:84]
+INFO: [Synth 8-638] synthesizing module 'cellProcessor_int' [D:/Repos/ImageProcessorCore/src/CellProcessor_int.sv:2]
+INFO: [Synth 8-256] done synthesizing module 'cellProcessor_int' (0#1) [D:/Repos/ImageProcessorCore/src/CellProcessor_int.sv:2]
+INFO: [Synth 8-638] synthesizing module 'debounce' [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:24]
+	Parameter CLK_FREQUENCY_HZ bound to: 100000000 - type: integer 
+	Parameter DEBOUNCE_FREQUENCY_HZ bound to: 250 - type: integer 
+	Parameter RESET_POLARITY_LOW bound to: 1 - type: integer 
+	Parameter CNTR_WIDTH bound to: 32 - type: integer 
+	Parameter SIMULATE bound to: 0 - type: integer 
+	Parameter SIMULATE_FREQUENCY_CNT bound to: 5 - type: integer 
+	Parameter pb0_in bound to: 4'b0001 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:101]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:102]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:103]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:104]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:105]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:106]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:109]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:110]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:111]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:112]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:113]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:114]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:115]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:116]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:117]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:118]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:119]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:120]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:121]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:122]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:123]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:124]
+INFO: [Synth 8-256] done synthesizing module 'debounce' (1#1) [D:/Repos/ImageProcessorCore/src/SwitchDebouncer.v:24]
+INFO: [Synth 8-638] synthesizing module 'sevensegment' [D:/Repos/ImageProcessorCore/src/sevensegment.v:35]
+	Parameter CLK_FREQUENCY_HZ bound to: 100000000 - type: integer 
+	Parameter REFRESH_FREQUENCY_HZ bound to: 500 - type: integer 
+	Parameter RESET_POLARITY_LOW bound to: 1 - type: integer 
+	Parameter CNTR_WIDTH bound to: 32 - type: integer 
+	Parameter SIMULATE bound to: 0 - type: integer 
+	Parameter SIMULATE_FREQUENCY_CNT bound to: 5 - type: integer 
+	Parameter digit1 bound to: 8'b11111110 
+	Parameter digit2 bound to: 8'b11111101 
+	Parameter digit3 bound to: 8'b11111011 
+	Parameter digit4 bound to: 8'b11110111 
+	Parameter digit5 bound to: 8'b11101111 
+	Parameter digit6 bound to: 8'b11011111 
+	Parameter digit7 bound to: 8'b10111111 
+	Parameter digit8 bound to: 8'b01111111 
+INFO: [Synth 8-638] synthesizing module 'Digit' [D:/Repos/ImageProcessorCore/src/sevensegment.v:196]
+	Parameter zero bound to: 7'b1000000 
+	Parameter one bound to: 7'b1111001 
+	Parameter two bound to: 7'b0100100 
+	Parameter three bound to: 7'b0110000 
+	Parameter four bound to: 7'b0011001 
+	Parameter five bound to: 7'b0010010 
+	Parameter six bound to: 7'b0000010 
+	Parameter seven bound to: 7'b1111000 
+	Parameter eight bound to: 7'b0000000 
+	Parameter nine bound to: 7'b0010000 
+	Parameter A bound to: 7'b0001000 
+	Parameter B bound to: 7'b0000011 
+	Parameter C bound to: 7'b1000110 
+	Parameter D bound to: 7'b0100001 
+	Parameter E bound to: 7'b0000110 
+	Parameter F bound to: 7'b0001110 
+	Parameter seg_a bound to: 7'b1111110 
+	Parameter seg_b bound to: 7'b1111101 
+	Parameter seg_c bound to: 7'b1111011 
+	Parameter seg_d bound to: 7'b1110111 
+	Parameter seg_e bound to: 7'b1101111 
+	Parameter seg_f bound to: 7'b1011111 
+	Parameter seg_g bound to: 7'b0111111 
+	Parameter upH bound to: 7'b0001001 
+	Parameter upL bound to: 7'b1000111 
+	Parameter upR bound to: 7'b0001000 
+	Parameter lol bound to: 7'b1001111 
+	Parameter lor bound to: 7'b0101111 
+	Parameter blank bound to: 7'b1111111 
+INFO: [Synth 8-256] done synthesizing module 'Digit' (2#1) [D:/Repos/ImageProcessorCore/src/sevensegment.v:196]
+INFO: [Synth 8-256] done synthesizing module 'sevensegment' (3#1) [D:/Repos/ImageProcessorCore/src/sevensegment.v:35]
+INFO: [Synth 8-638] synthesizing module 'CellProcessor' [D:/Repos/ImageProcessorCore/src/CellProcessor.sv:6]

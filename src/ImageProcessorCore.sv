@@ -14,7 +14,7 @@
 //  btnCpuReset 	- CPU RESET Button - System reset.  Asserted low by Nexys 4 board
 //  sw[3:0] 		- Used to switch between cellA input colors.
 //  sw[7:4] 		- Used to switch between cellB input colors.
-//  sw[15:11] 		- Used to switch between possible opcodes.
+//  sw[15:12] 		- Used to switch between possible opcodes.
 //  led[15:0] 		- Light up to show that switch is registered.
 //  7-segment[2:0] 	- Outputs the values of each of the channels in the resulting image.
 //
@@ -68,15 +68,6 @@ module Nexys4fpga (
 /* Setup for 7-segment display		                              */
 /******************************************************************/		
 	// set up the display and LEDs
-	assign	dig7 = {5'b11111};					// blank
-	assign	dig6 = {5'b11111};
-	assign	dig5 = {5'b11111};
-	assign	dig4 = {5'b11111};
-	
-	assign	dig3 = MIDisplay;
-	assign	dig2 = Hundreds;
-	assign 	dig1 = Tens;
-	assign	dig0 = Ones;
 	assign	decpts = 8'b00000100;			// d2 is on
 	assign  dp = segs_int[7];
 	assign  seg = segs_int[6:0];
@@ -86,8 +77,11 @@ module Nexys4fpga (
 /******************************************************************/		
 	assign	led = db_sw;			    // leds show the debounced switches
 
-	
-
+/******************************************************************/
+/* Setup for the cell processor				                      */
+/******************************************************************/
+    // interfaces
+	cellProcessor_int cell_int(sysclk, sysreset);
 	
 	assign	JA = {sysclk, sysreset, 6'b000000};
 	
@@ -113,14 +107,14 @@ module Nexys4fpga (
 	) SSB
 	(
 		// inputs for control signals
-		.d0({1'b0, result[3:0]}),
-		.d1({1'b0, result[7:4]}),
+		.d0({1'b0, cell_int.processedCell[3:0]}),
+		.d1({1'b0, cell_int.processedCell[7:4]}),
  		.d2(5'b0),
-		.d3({1'b0, result[11:8]}),
-		.d4({1'b0, result[15:12]}),
+		.d3({1'b0, cell_int.processedCell[11:8]}),
+		.d4({1'b0, cell_int.processedCell[15:12]}),
 		.d5(5'b0),
-		.d6({1'b0, result[19:16]}),
-		.d7({1'b0, result[23:20]}),
+		.d6({1'b0, cell_int.processedCell[19:16]}),
+		.d7({1'b0, cell_int.processedCell[23:20]}),
 		.dp(decpts),
 		
 		// outputs to seven segment display
@@ -131,12 +125,23 @@ module Nexys4fpga (
 		.clk(sysclk),
 		.reset(sysreset),
 		
-		// ouput for simulation only
+		// output for simulation only
 		.digits_out(digits_out)
 	);
 
-	ImageProcessor IPCore( .clk(sysclk), .rst(sysreset), .IW(IW), .result(result));
-);
+	// Instantiate the cell processor
+	CellProcessor IPCore(.ports(cell_int.cellPorts));
 	
+	// Instantiate the cell Indicator
+	CellIndicator
+	#(
+		.RESET_POLARITY_LOW(RESET_POLARITY_LOW)
+	 ) Indicate
+	(
+		.SYSCLK(sysclk),
+		.RST(sysreset),
+		.DebouncedSwitches(db_sw),
+		.ports(cell_int.imagePorts)
+	);
 	
 endmodule

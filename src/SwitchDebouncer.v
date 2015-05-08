@@ -28,7 +28,6 @@ module debounce
 	parameter integer	DEBOUNCE_FREQUENCY_HZ	= 250,
 	parameter integer	RESET_POLARITY_LOW		= 1,
 	parameter integer 	CNTR_WIDTH 				= 32,
-	
 	parameter integer	SIMULATE				= 0,
 	parameter integer	SIMULATE_FREQUENCY_CNT	= 5
 )
@@ -43,7 +42,7 @@ module debounce
 );
 
 	// CPU reset is on pb0.  need to take it's polarity into account
-	parameter [3:0]		pb0_in = RESET_POLARITY_LOW ? 4'h1 : 4'h0;
+	parameter [3:0]	pb0_in = RESET_POLARITY_LOW ? 4'h1 : 4'h0;
 	
 	// debounce clock divider 
 	reg			[CNTR_WIDTH-1:0]	db_count = 0;

@@ -33,14 +33,6 @@ package CellProcessingPkg;
 		pixel_t [cellN - 1:0][cellN - 1:0] 	pixelMatrix; 
 		logic 	[cellDepth - 1:0] 			singleCell;
 	} cell_t;
-		
-    // type definition for instructions
-    typedef struct packed{
-		cell_t 		cellA;
-		cell_t 		cellB;
-		userInput_t userInputA;
-        opcodes_t 	opcode;
-    } instruction_t;
 
     // Function for adding two cell's center pixels to each other
     // Inputs: pixelMatrix_t, userInput_t

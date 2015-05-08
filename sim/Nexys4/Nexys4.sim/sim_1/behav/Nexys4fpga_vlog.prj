@@ -1,0 +1,14 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  "../../../../../src/Packages.sv"
+sv xil_defaultlib  "../../../../../src/CellProcessor_int.sv"
+verilog xil_defaultlib  "../../../../../src/SwitchDebouncer.v"
+sv xil_defaultlib  "../../../../../src/CellProcessor.sv"
+verilog xil_defaultlib  "../../../../../src/sevensegment.v"
+sv xil_defaultlib  "../../../../../src/CellIndicator.sv"
+sv xil_defaultlib  "../../../../../src/ImageProcessorCore.sv"
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
