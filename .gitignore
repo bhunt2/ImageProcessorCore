@@ -32,7 +32,10 @@ sim/*.cache
 sim/*.runs
 sim/*.sim
 sim/vivado.*
-sim/IPCore.*
 sim/*.map
 sim/*.med
 sim/*.ini
+sim/Nexys4/*.cache
+sim/Nexys4/*.hw
+sim/Nexys4/*.runs
+sim/Nexys4/*.sim
