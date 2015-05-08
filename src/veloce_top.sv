@@ -15,10 +15,11 @@ module veloce_top
 	always @(posedge clk) begin
 		cell_int.cellA.singleCell	<= cellA;
 		cell_int.cellB.singleCell	<= cellB;
-		cell_int.userInputA 			= userInputA;
+		cell_int.userInputA 		<= userInputA;
 		cell_int.opcode				<= opcode;
-		processedCell				<= cell_int.processedCell.singleCell;
 	end
+
+	assign processedCell = cell_int.processedCell.singleCell;
 
 	// Instantiate the cell processor
 	CellProcessor IPCore(.ports(cell_int.cellPorts));
