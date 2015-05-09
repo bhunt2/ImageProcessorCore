@@ -30,8 +30,8 @@ package CellProcessingPkg;
 	
 	// type definition for a cell
 	typedef union packed{
+		logic	[cellDepth - 1:0]		singleCell;
 		pixel_t [cellN - 1:0][cellN - 1:0] 	pixelMatrix; 
-		logic 	[cellDepth - 1:0] 			singleCell;
 	} cell_t;
 
     // Function for adding two cell's center pixels to each other
