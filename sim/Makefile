@@ -63,7 +63,7 @@ qcompile:
 
 #Run the test
 qrun:
-	vsim -c TestBench
+	vsim -c veloce_top
 	@echo -e "Running project."
 
 #Clean the project
