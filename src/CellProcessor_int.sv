@@ -1,10 +1,12 @@
+import CellProcessingPkg::cellDepth;
+
 // Interface
 interface cellProcessor_int(input logic clk, rst);
-    CellProcessingPkg::cell_t 		cellA;
-    CellProcessingPkg::cell_t 		cellB;
-    CellProcessingPkg::userInput_t userInputA;
+    logic [cellDepth - 1:0] 		cellA;
+    logic [cellDepth - 1:0] 		cellB;
+    CellProcessingPkg::userInput_t  userInputA;
     CellProcessingPkg::opcodes_t 	opcode;
-    CellProcessingPkg::cell_t		processedCell;
+    logic [cellDepth - 1:0]			processedCell;
     
     modport cellPorts ( input  clk,
                         input  rst,
