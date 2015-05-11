@@ -9,7 +9,7 @@ module CellProcessor(
     import CellProcessingPkg::*;
     
     pixel_t RESULT;
-    assign ports.processedCell = RESULT;
+    assign ports.processedPixel = RESULT;
 	
 	cell_t cellBlockA;
 	cell_t cellBlockB;
@@ -29,7 +29,6 @@ module CellProcessor(
                 ADDI:   RESULT  = addi(cellBlockA, ports.userInputA);
                 SUB :   RESULT  = sub(cellBlockA, cellBlockB);
                 SUBI:   RESULT  = subi(cellBlockA, ports.userInputA);
-				AVG:	RESULT	= avg(cellBlockA);
                 default: RESULT = cellBlockA.pixelMatrix[centerPixel];
             endcase
         end

@@ -6,9 +6,9 @@ package CellProcessingPkg;
 	parameter opCodeWidth 	= 4;
 	parameter channelWidth 	= 8;
 	parameter channelNum    = 3;
-	parameter channelDepth  = channelWidth * channelNum;
+	parameter pixelDepth  = channelWidth * channelNum;
 	parameter cellN			= 3;
-	parameter cellDepth		= channelDepth * cellN * cellN;
+	parameter cellDepth		= pixelDepth * cellN * cellN;
 	parameter centerPixel	= (cellN * cellN - 1) >> 1;
 	parameter divShift		= $clog2(cellN * cellN);
 
@@ -22,11 +22,13 @@ package CellProcessingPkg;
 	typedef logic [channelWidth - 1:0] userInput_t;
 
 	// type definition for a pixel
-	typedef struct packed{
-		colorChannel_t red;
-		colorChannel_t green;
-		colorChannel_t blue;
-	} pixel_t;
+	typedef logic [pixelDepth - 1:0] pixel_t;
+	//typedef union packed{
+		//logic [pixelDepth - 1:0] singlePixel;
+		//colorChannel_t red;
+		//colorChannel_t green;
+		//colorChannel_t blue;
+	//} pixel_t;
 	
 	// type definition for a cell
 	typedef union packed{
@@ -39,12 +41,12 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t add (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		cellA.pixelMatrix[centerPixel].red 	    += cellB.pixelMatrix[centerPixel].red;
-		cellA.pixelMatrix[centerPixel].green 	+= cellB.pixelMatrix[centerPixel].green;
-		cellA.pixelMatrix[centerPixel].blue 	+= cellB.pixelMatrix[centerPixel].blue;
+		cellA.pixelMatrix[centerPixel][7:0] 	+= cellB.pixelMatrix[centerPixel][7:0];
+		cellA.pixelMatrix[centerPixel][15:8] 	+= cellB.pixelMatrix[centerPixel][15:0];
+		cellA.pixelMatrix[centerPixel][23:16] 	+= cellB.pixelMatrix[centerPixel][23:16];
 		
 		// Return result
-        return cellA.pixelMatrix[centerPixel][centerPixel];
+        return cellA.pixelMatrix[centerPixel];
     endfunction
     
     // Function for adding a cell's center pixel with an immediate user input
@@ -53,9 +55,9 @@ package CellProcessingPkg;
     function automatic pixel_t addi (cell_t cellA, userInput_t userInputA);
         
         // Add user input to each color channel in center pixel of cellA
-		cellA.pixelMatrix[centerPixel].red 	+= userInputA;
-		cellA.pixelMatrix[centerPixel].green 	+= userInputA;
-		cellA.pixelMatrix[centerPixel].blue 	+= userInputA;
+		//cellA.pixelMatrix[centerPixel].red 	+= userInputA;
+		//cellA.pixelMatrix[centerPixel].green 	+= userInputA;
+		//cellA.pixelMatrix[centerPixel].blue 	+= userInputA;
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -66,9 +68,9 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t sub (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		cellA.pixelMatrix[centerPixel].red 		-= cellB.pixelMatrix[centerPixel].red;
-		cellA.pixelMatrix[centerPixel].green 	-= cellB.pixelMatrix[centerPixel].green;
-		cellA.pixelMatrix[centerPixel].blue 	-= cellB.pixelMatrix[centerPixel].blue;
+		//cellA.pixelMatrix[centerPixel].red 		-= cellB.pixelMatrix[centerPixel].red;
+		//cellA.pixelMatrix[centerPixel].green 	-= cellB.pixelMatrix[centerPixel].green;
+		//cellA.pixelMatrix[centerPixel].blue 	-= cellB.pixelMatrix[centerPixel].blue;
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -80,9 +82,9 @@ package CellProcessingPkg;
     function automatic pixel_t subi (cell_t cellA, userInput_t userInputA);
         
         // Subtract user input from each color channel in center pixel of cellA
-		cellA.pixelMatrix[centerPixel].red 		-= userInputA;
-		cellA.pixelMatrix[centerPixel].green 	-= userInputA;
-		cellA.pixelMatrix[centerPixel].blue 	-= userInputA;
+		//cellA.pixelMatrix[centerPixel].red 		-= userInputA;
+		//cellA.pixelMatrix[centerPixel].green 	-= userInputA;
+		//cellA.pixelMatrix[centerPixel].blue 	-= userInputA;
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -96,11 +98,11 @@ package CellProcessingPkg;
 		integer redSum, greenSum, blueSum;
 		
         // Sum pixels within a cell
-		foreach (cellA.pixelMatrix[x]) begin
-			redSum 		+= cellA.pixelMatrix[x].red;
-			greenSum 	+= cellA.pixelMatrix[x].green;
-			blueSum		+= cellA.pixelMatrix[x].blue;
-		end
+		//foreach (cellA.pixelMatrix[x]) begin
+			//redSum 		+= cellA.pixelMatrix[x].red;
+			//greenSum 	+= cellA.pixelMatrix[x].green;
+			//blueSum		+= cellA.pixelMatrix[x].blue;
+		//end
 		
 		// Divide for average
 		// This uses a predefined parameter using 
@@ -109,7 +111,7 @@ package CellProcessingPkg;
 		blueSum 	>>>= divShift;
 		
 		// Return result
-        return {redSum,greenSum,blueSum};
+        return {redSum[channelWidth - 1:0],greenSum[channelWidth - 1:0],blueSum[channelWidth - 1:0]};
     endfunction
 endpackage
 
