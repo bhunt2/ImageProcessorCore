@@ -35,7 +35,8 @@ sim/vivado.*
 sim/*.map
 sim/*.med
 sim/*.ini
-sim/Nexys4/*.cache
-sim/Nexys4/*.hw
-sim/Nexys4/*.runs
-sim/Nexys4/*.sim
+sim/CellProcessor/*.cache
+sim/CellProcessor/*.hw
+sim/CellProcessor/*.runs
+sim/CellProcessor/*.sim
+sim/CellProcessor/*.xpr

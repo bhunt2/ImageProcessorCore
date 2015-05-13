@@ -42,7 +42,7 @@ module debounce
 );
 
 	// CPU reset is on pb0.  need to take it's polarity into account
-	parameter [3:0]	pb0_in = RESET_POLARITY_LOW ? 4'h1 : 4'h0;
+	localparam [3:0]	pb0_in = RESET_POLARITY_LOW ? 4'h1 : 4'h0;
 	
 	// debounce clock divider 
 	reg			[CNTR_WIDTH-1:0]	db_count = 0;
