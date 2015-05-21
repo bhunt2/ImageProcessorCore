@@ -107,14 +107,14 @@ module Nexys4fpga (
 	) SSB
 	(
 		// inputs for control signals
-		.d0({1'b0, cell_int.processedCell[3:0]}),
-		.d1({1'b0, cell_int.processedCell[7:4]}),
+		.d0({1'b0, cell_int.processedPixel[3:0]}),
+		.d1({1'b0, cell_int.processedPixel[7:4]}),
  		.d2(5'b0),
-		.d3({1'b0, cell_int.processedCell[11:8]}),
-		.d4({1'b0, cell_int.processedCell[15:12]}),
+		.d3({1'b0, cell_int.processedPixel[11:8]}),
+		.d4({1'b0, cell_int.processedPixel[15:12]}),
 		.d5(5'b0),
-		.d6({1'b0, cell_int.processedCell[19:16]}),
-		.d7({1'b0, cell_int.processedCell[23:20]}),
+		.d6({1'b0, cell_int.processedPixel[19:16]}),
+		.d7({1'b0, cell_int.processedPixel[23:20]}),
 		.dp(decpts),
 		
 		// outputs to seven segment display
