@@ -71,7 +71,7 @@ int load_images() {
 }
 
 /********************************************************************
-** Send a 3x3 set of pixels to the image procesor core
+** Send a 3x3 set of pixels to the image processor core
 ********************************************************************/
 int send_3x3_pixels(svBitVecVal* cellA, svBitVecVal* cellB) {
 	const uint8_t bytes_per_pixel = 3;	//One byte for R, G and B
@@ -103,7 +103,7 @@ int send_3x3_pixels(svBitVecVal* cellA, svBitVecVal* cellB) {
 	
 	cells_across++;
 
-	//Becuase of how the image is laid out in the full image file, we need to move down
+	//Because of how the image is laid out in the full image file, we need to move down
 	//two pixels when we reach the end of the width of the row. This is done by adding
 	//down pixel twice to the current anchor pixel position.
 	anchor_pixelA += bytes_per_pixel * pixel_width_3x3;	
