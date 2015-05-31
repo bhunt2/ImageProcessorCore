@@ -23,12 +23,6 @@ package CellProcessingPkg;
 
 	// type definition for a pixel
 	typedef logic [pixelDepth - 1:0] pixel_t;
-	//typedef union packed{
-		//logic [pixelDepth - 1:0] singlePixel;
-		//colorChannel_t red;
-		//colorChannel_t green;
-		//colorChannel_t blue;
-	//} pixel_t;
 	
 	// type definition for a cell
 	typedef union packed{
