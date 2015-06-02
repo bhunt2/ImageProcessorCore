@@ -65,7 +65,6 @@ module veloce_top;
 			end
 		end
 	end
-end
 	
 	assign cell_int.cellA		= cellA;
 	assign cell_int.cellB		= cellB;
