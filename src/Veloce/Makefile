@@ -3,8 +3,8 @@
 #Specify the mode- could be either puresim or veloce
 #Always make sure that everything works fine in puresim before changing to veloce
 
-MODE ?= veloce
-#MODE ?= puresim
+#MODE ?= veloce
+MODE ?= puresim
 
 #make all does everything
 all: clean lib compile run
@@ -36,5 +36,5 @@ else
 endif
                                                                                 
 clean:
-	rm -rf edsenv transcript modelsim.ini transcript.veloce veloce.puresim transcript.puresim veloce.map veloce.wave velrunopts.ini work work.veloce veloce.out veloce.med veloce.log tbxbindings.h 
+	rm -rf edsenv transcript modelsim.ini transcript.veloce veloce.puresim transcript.puresim veloce.map veloce.wave velrunopts.ini work work.veloce veloce.out veloce.med veloce.log tbxbindings.h work.puresim
 
