@@ -3,8 +3,8 @@
 #Specify the mode- could be either puresim or veloce
 #Always make sure that everything works fine in puresim before changing to veloce
 
-#MODE ?= veloce
-MODE ?= puresim
+MODE ?= veloce
+#MODE ?= puresim
 
 #make all does everything
 all: clean lib compile run
