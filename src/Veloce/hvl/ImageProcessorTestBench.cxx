@@ -9,8 +9,10 @@
 //#define PRINT_CELLB
 
 #define IMAGE_PIXEL_WIDTH 6
-#define CELLS_PER_WIDTH IMAGE_PIXEL_WIDTH / 3
-#define CELLS_PER_IMAGE CELLS_PER_WIDTH * CELLS_PER_WIDTH
+#define BYTES_PER_PIXEL 3
+#define CELLS_PER_WIDTH IMAGE_PIXEL_WIDTH - 2
+#define CELLS_PER_IMAGE CELLS_PER_WIDTH * CELLS_PER_WIDTH	//The height is the same as the width
+#define PIXELS_PER_RESULT CELLS_PER_IMAGE	//They are the same value
 
 FILE* image1;
 FILE* image2;
@@ -18,6 +20,7 @@ char* image1_name = "Full.bin";
 char* image2_name = "B1.bin";
 uint8_t* image1_buffer;
 uint8_t* image2_buffer;
+uint8_t* result_buffer = malloc(PIXELS_PER_RESULT * BYTES_PER_PIXEL * sizeof(uint8_t));
 int image1_size;
 int image2_size;
 uint32_t* cellA_buffers[CELLS_PER_IMAGE];
@@ -29,6 +32,7 @@ int send_3x3_pixels(svBitVecVal*,svBitVecVal*);
 void fill_hdl_cell(svBitVecVal*, uint32_t*, const uint8_t);
 void print_3x3_cell(uint32_t*, const uint8_t);
 void fill_cell_buffer(uint32_t*, uint8_t*, uint32_t, const uint8_t, const uint8_t, const uint8_t);  
+int recieve_result_pixel(svBitVecVal*, svBitVecVal*);
 int shutdown_hvl();
 int file_size(FILE*);
 void print_mem_buffer();
@@ -64,14 +68,14 @@ int load_images() {
 	image2_buffer = (uint8_t*) malloc(image2_size * sizeof(uint8_t));
 	if(image2_buffer == NULL) exit(-5);
 
-	bytes_read = fread(image2_buffer, 1, image2_size, image2);
+	bytes_read = fread(i3mage2_buffer, 1, image2_size, image2);
 	if(bytes_read != image2_size) {printf("Error readin second file\n"); exit(-6);}
 
 	return 0;
 }
 
 /********************************************************************
-** Send a 3x3 set of pixels to the image processor core
+** Send a 3x3 set of pixels to the image procesor core
 ********************************************************************/
 int send_3x3_pixels(svBitVecVal* cellA, svBitVecVal* cellB) {
 	const uint8_t bytes_per_pixel = 3;	//One byte for R, G and B
@@ -103,14 +107,14 @@ int send_3x3_pixels(svBitVecVal* cellA, svBitVecVal* cellB) {
 	
 	cells_across++;
 
-	//Because of how the image is laid out in the full image file, we need to move down
+	//Becuase of how the image is laid out in the full image file, we need to move down
 	//two pixels when we reach the end of the width of the row. This is done by adding
-	//down pixel twice to the current anchor pixel position.
-	anchor_pixelA += bytes_per_pixel * pixel_width_3x3;	
-	anchor_pixelB += bytes_per_pixel * pixel_width_3x3;
+	//down pixel to the current anchor pixel position.
+	anchor_pixelA += bytes_per_pixel;	
+	anchor_pixelB += bytes_per_pixel;
 	if(cells_across == CELLS_PER_WIDTH) {
-		anchor_pixelA += down_pixel * 2;
-		anchor_pixelB += down_pixel * 2;
+		anchor_pixelA += down_pixel;
+		anchor_pixelB += down_pixel;
 		cells_across = 0;
 	}
 
@@ -148,7 +152,6 @@ void fill_hdl_cell(svBitVecVal* input_cell, uint32_t* cell_buffer, const uint8_t
 		shift_amount += shift_adder;
 	}
 }
-
 
 /********************************************************************
 ** This function prints out the hex values of the 3x3 cell being sent
@@ -194,6 +197,25 @@ void fill_cell_buffer(uint32_t* cell_buffer, uint8_t* image_buffer, uint32_t anc
 }
 
 /********************************************************************
+** Recieves the resulting pixel from the hdl
+********************************************************************/
+int recieve_result_pixel(svBitVecVal* result, svBitVecVal* done) {
+	const uint32_t bytes_in_result = PIXELS_PER_RESULT * BYTES_PER_PIXEL;
+	static uint32_t result_image_position = 0;
+	
+	result_buffer[result_image_position] = *result & 0xFF;
+	result_buffer[result_image_position + 1] = (*result & 0xFF00) >> 8;
+	result_buffer[result_image_position + 2] = (*result & 0xFF0000) >> 16;
+
+	result_image_position += 3;	//Move to the next pixel
+
+	if(result_image_position > bytes_in_result) *done = 1;
+	else *done = 0;
+
+	return 0;
+}
+
+/********************************************************************
 ** Final function to call before the end of the simulation
 ********************************************************************/
 int shutdown_hvl() {
@@ -201,6 +223,7 @@ int shutdown_hvl() {
 
 	free(image1_buffer);
 	free(image2_buffer);
+	free(result_buffer);
 
 	for(free_count = 0; free_count < CELLS_PER_IMAGE; free_count++) {
 		free(cellA_buffers[free_count]);
