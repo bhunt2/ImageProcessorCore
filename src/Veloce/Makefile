@@ -20,21 +20,21 @@ endif
 
 compile:
 ifeq ($(MODE),puresim)
-	../Packages.sv ../CellProcessor_int.sv ../CellProcessor.sv vlog hdl/veloce_top.sv -dpiheader tbxbindings.h 
+	vlog ../Packages.sv ../CellProcessor_int.sv ../CellProcessor.sv hdl/veloce_top.sv -dpiheader tbxbindings.h 
 	vlog hvl/ImageProcessorTestBench.cxx 
 else
-	velanalyze ../Packages.sv ../CellProcessor_int.sv ../CellProcessor.sv vlog hdl/veloce_top.sv
+	velanalyze ../Packages.sv ../CellProcessor_int.sv ../CellProcessor.sv hdl/veloce_top.sv
 	#Note that the ImageProcessorTestBench.cxx file is passed to velcomp in veloce.config file. That way it knows this is the CoModel and compiles, then later runs on workstation
 	velcomp
 endif
                                                            
 run:
 ifeq ($(MODE),puresim)
-	vsim -c simple_alu_tb_dpi -do "run -all" | tee transcript.puresim
+	vsim -c veloce_top -do "run -all" | tee transcript.puresim
 else
 	velrun $(RUNTIME_OPTS) | tee transcript.veloce
 endif
                                                                                 
 clean:
-	rm -rf edsenv transcript modelsim.ini transcript.veloce transcript.puresim veloce.map veloce.wave velrunopts.ini work work.veloce veloce.out veloce.med veloce.log tbxbindings.h 
+	rm -rf edsenv transcript modelsim.ini transcript.veloce veloce.puresim transcript.puresim veloce.map veloce.wave velrunopts.ini work work.veloce veloce.out veloce.med veloce.log tbxbindings.h 
 
