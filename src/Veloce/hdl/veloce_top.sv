@@ -5,9 +5,9 @@ module veloce_top;
 	reg clk, rst;
 	bit [cellDepth - 1:0]	cellA;
     bit [cellDepth - 1:0]	cellB;
-	bit userInput_t userInputA;
-	bit opcodes_t opcode;
-	bit pixel_t processedPixel;
+	userInput_t userInputA;
+	opcodes_t opcode;
+	pixel_t processedPixel;
 	integer done;
 
 	//clock generator
