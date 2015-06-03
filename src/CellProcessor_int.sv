@@ -5,7 +5,7 @@ interface cellProcessor_int(input logic clk, rst);
     logic [cellDepth - 1:0] 		cellA;
     logic [cellDepth - 1:0] 		cellB;
     CellProcessingPkg::userInput_t  userInputA;
-    CellProcessingPkg::opcodes_t 	opcode;
+    logic [opCodeWidth - 1:0]		opcode;
     CellProcessingPkg::pixel_t		processedPixel;
     
     modport cellPorts ( input  clk,
