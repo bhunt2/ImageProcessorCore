@@ -19,7 +19,7 @@ package CellProcessingPkg;
     typedef logic [channelWidth - 1:0] colorChannel_t;
 	
 	// type definition for user inputs
-	typedef logic [channelWidth - 1:0] userInput_t;
+	typedef logic [pixelDepth - 1:0] userInput_t;
 
 	// type definition for a pixel
 	typedef logic [pixelDepth - 1:0] pixel_t;
@@ -41,9 +41,9 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t add (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		cellA.pixelMatrix[centerPixel][7:0] 	+= cellB.pixelMatrix[centerPixel][7:0];
-		cellA.pixelMatrix[centerPixel][15:8] 	+= cellB.pixelMatrix[centerPixel][15:0];
-		cellA.pixelMatrix[centerPixel][23:16] 	+= cellB.pixelMatrix[centerPixel][23:16];
+		for (int i = 0; i <= pixelDepth; i += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][(channelWidth + i) - 1:i] 	+= cellB.pixelMatrix[centerPixel](channelWidth + i) - 1:i];
+		end
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -119,6 +119,7 @@ package ImageProcessingPkg;
 	
 	// Import necessary packages
 	import CellProcessingPkg::pixel_t;
+	import CellProcessingPkg::cellN;
 	import CellProcessingPkg::centerPixel;
 	import CellProcessingPkg::opcodes_t;
 	import CellProcessingPkg::userInput_t;
@@ -128,13 +129,13 @@ package ImageProcessingPkg;
 	parameter imageHeighth 	= 480;
 	
 	// type definition for an image
-	typedef pixel_t [imageWidth - 1:0][imageHeighth - 1:0] rxImage_t;
-	typedef pixel_t [imageWidth - (centerPixel + 1):0][imageHeighth - (centerPixel + 1):0] txImage_t;
+	typedef pixel_t [imageWidth - 1:0][cellN - 1:0] cellBuff_t;
+	typedef pixel_t [imageWidth - 1:0] ioBuff_t;
 	
 	// type definition for instructions
     typedef struct packed{
-		rxImage_t 	imageA;
-		rxImage_t	imageB;
+		pixel_t		pixelA;
+		pixel_t 	pixelB;
 		userInput_t userInputA;
         opcodes_t 	opcode;
     } instruction_t;
