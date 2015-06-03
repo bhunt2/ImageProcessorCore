@@ -35,8 +35,8 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t add (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		for (int i = 0; i <= pixelDepth; i += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][(channelWidth + i) - 1:0] 	+= cellB.pixelMatrix[centerPixel][(channelWidth + i) - 1:0];
+		for (int index = 0; i <= pixelDepth; i += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += cellB.pixelMatrix[centerPixel][index +:channelWidth];
 		end
 		
 		// Return result
