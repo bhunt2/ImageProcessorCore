@@ -1,4 +1,5 @@
 import CellProcessingPkg::cellDepth;
+import CellProcessingPkg::opCodeWidth;
 
 // Interface
 interface cellProcessor_int(input logic clk, rst);
