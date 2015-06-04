@@ -39,7 +39,7 @@ package CellProcessingPkg;
 		
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] = cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + cellB.pixelMatrix[centerPixel][index +:channelWidth];
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
 			end
