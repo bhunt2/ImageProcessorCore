@@ -6,11 +6,12 @@ package CellProcessingPkg;
 	parameter opCodeWidth 	= 4;
 	parameter channelWidth 	= 8;
 	parameter channelNum    = 3;
-	parameter pixelDepth  = channelWidth * channelNum;
 	parameter cellN			= 3;
+	parameter pixelDepth    = channelWidth * channelNum;
 	parameter cellDepth		= pixelDepth * cellN * cellN;
 	parameter centerPixel	= (cellN * cellN - 1) >> 1;
 	parameter divShift		= $clog2(cellN * cellN);
+	parameter boundUp		= 1 << channelWidth + 1;
 
     // type definition enumeration for opcodes
     typedef enum logic [opCodeWidth - 1:0] {ADD, ADDI, SUB, SUBI, MULT, MULTI, DIV2, INV, AND, OR, NOR, AVG} opcodes_t;
@@ -34,9 +35,17 @@ package CellProcessingPkg;
     // Inputs: pixelMatrix_t, userInput_t
 	// Output: pixel_t
 	function automatic pixel_t add (cell_t cellA, cellB);
+		logic [channelWidth:0] tempPix;
+		
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] += cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] = cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			if(tempPix >= boundUp) begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
+			end
+			else begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = tempPix;
+			end
 		end
 		
 		// Return result
