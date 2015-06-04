@@ -11,7 +11,7 @@
 //#define PRINT_IMAGE2
 #define PRINT_RESULT_BUFFER
 
-#define IMAGE_PIXEL_WIDTH 6
+#define IMAGE_PIXEL_WIDTH 150
 #define BYTES_PER_PIXEL 3
 #define CELLS_PER_WIDTH (IMAGE_PIXEL_WIDTH - 2)
 #define CELLS_PER_IMAGE (CELLS_PER_WIDTH * CELLS_PER_WIDTH)	//The height is the same as the width
