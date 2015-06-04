@@ -50,7 +50,7 @@ package CellProcessingPkg;
         
         // Add user input to each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInput_t[index +:channelWidth];
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInputA[index +:channelWidth];
 		end
 		
 		// Return result
@@ -77,7 +77,7 @@ package CellProcessingPkg;
         
         // Subtract user input from each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInput_t[index +:channelWidth];
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInputA[index +:channelWidth];
 		end
 		
 		// Return result
@@ -128,8 +128,7 @@ package ImageProcessingPkg;
 	
 	// type definition for instructions
     typedef struct packed{
-		rxImage_t 	imageA;
-		rxImage_t	imageB;
+		
 		userInput_t userInputA;
         opcodes_t 	opcode;
     } instruction_t;
