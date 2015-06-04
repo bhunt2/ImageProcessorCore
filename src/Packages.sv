@@ -19,16 +19,10 @@ package CellProcessingPkg;
     typedef logic [channelWidth - 1:0] colorChannel_t;
 	
 	// type definition for user inputs
-	typedef logic [pixelDepth - 1:0] userInput_t;
+	typedef logic [cellDepth - 1:0] userInput_t;
 
 	// type definition for a pixel
 	typedef logic [pixelDepth - 1:0] pixel_t;
-	//typedef union packed{
-		//logic [pixelDepth - 1:0] singlePixel;
-		//colorChannel_t red;
-		//colorChannel_t green;
-		//colorChannel_t blue;
-	//} pixel_t;
 	
 	// type definition for a cell
 	typedef union packed{
@@ -41,8 +35,8 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t add (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		for (int i = 0; i <= pixelDepth; i += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][(channelWidth + i) - 1:i] 	+= cellB.pixelMatrix[centerPixel](channelWidth + i) - 1:i];
+		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += cellB.pixelMatrix[centerPixel][index +:channelWidth];
 		end
 		
 		// Return result
@@ -55,9 +49,9 @@ package CellProcessingPkg;
     function automatic pixel_t addi (cell_t cellA, userInput_t userInputA);
         
         // Add user input to each color channel in center pixel of cellA
-		//cellA.pixelMatrix[centerPixel].red 	+= userInputA;
-		//cellA.pixelMatrix[centerPixel].green 	+= userInputA;
-		//cellA.pixelMatrix[centerPixel].blue 	+= userInputA;
+		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInput_t[index +:channelWidth];
+		end
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -68,9 +62,9 @@ package CellProcessingPkg;
 	// Output: pixel_t
 	function automatic pixel_t sub (cell_t cellA, cellB);
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
-		//cellA.pixelMatrix[centerPixel].red 		-= cellB.pixelMatrix[centerPixel].red;
-		//cellA.pixelMatrix[centerPixel].green 	-= cellB.pixelMatrix[centerPixel].green;
-		//cellA.pixelMatrix[centerPixel].blue 	-= cellB.pixelMatrix[centerPixel].blue;
+		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] -= cellB.pixelMatrix[centerPixel][index +:channelWidth];
+		end
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -82,9 +76,9 @@ package CellProcessingPkg;
     function automatic pixel_t subi (cell_t cellA, userInput_t userInputA);
         
         // Subtract user input from each color channel in center pixel of cellA
-		//cellA.pixelMatrix[centerPixel].red 		-= userInputA;
-		//cellA.pixelMatrix[centerPixel].green 	-= userInputA;
-		//cellA.pixelMatrix[centerPixel].blue 	-= userInputA;
+		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
+			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInput_t[index +:channelWidth];
+		end
 		
 		// Return result
         return cellA.pixelMatrix[centerPixel];
@@ -98,11 +92,11 @@ package CellProcessingPkg;
 		integer redSum, greenSum, blueSum;
 		
         // Sum pixels within a cell
-		//foreach (cellA.pixelMatrix[x]) begin
-			//redSum 		+= cellA.pixelMatrix[x].red;
-			//greenSum 	+= cellA.pixelMatrix[x].green;
-			//blueSum		+= cellA.pixelMatrix[x].blue;
-		//end
+		foreach (cellA.pixelMatrix[x]) begin
+			redSum 		+= cellA.pixelMatrix[x][7:0];
+			greenSum 	+= cellA.pixelMatrix[x][15:8];
+			blueSum		+= cellA.pixelMatrix[x][23:16];
+		end
 		
 		// Divide for average
 		// This uses a predefined parameter using 
@@ -129,17 +123,21 @@ package ImageProcessingPkg;
 	parameter imageHeighth 	= 480;
 	
 	// type definition for an image
-	typedef pixel_t [imageWidth - 1:0][cellN - 1:0] cellBuff_t;
-	typedef pixel_t [imageWidth - 1:0] ioBuff_t;
+	typedef pixel_t [imageWidth - 1:0] ioBuf_t;
+	typedef pixel_t [imageWidth - 1:0] cellBuf_t [cellN - 1:0];		// Unpacked so that it creates an appropriately sized block
 	
 	// type definition for instructions
     typedef struct packed{
-		pixel_t		pixelA;
-		pixel_t 	pixelB;
+		rxImage_t 	imageA;
+		rxImage_t	imageB;
 		userInput_t userInputA;
         opcodes_t 	opcode;
     } instruction_t;
 
+	// Function for processing one image through the CellProcessor
+	
+	
+	
 	// Function for processing two images through the CellProcessor
 	
 	
