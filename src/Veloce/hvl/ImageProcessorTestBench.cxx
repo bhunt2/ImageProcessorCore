@@ -19,8 +19,8 @@
 
 FILE* image1;
 FILE* image2;
-const char* image1_name = "A1.bin";
-const char* image2_name = "B1.bin";
+const char* image1_name = "imageA.bin";
+const char* image2_name = "imageB.bin";
 uint8_t* image1_buffer;
 uint8_t* image2_buffer;
 uint8_t* result_buffer = (uint8_t*)malloc(PIXELS_PER_RESULT * BYTES_PER_PIXEL * sizeof(uint8_t));
