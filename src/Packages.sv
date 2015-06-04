@@ -56,10 +56,17 @@ package CellProcessingPkg;
 	// Inputs: pixelMatrix_t, userInput_t
 	// Output: pixel_t
     function automatic pixel_t addi (cell_t cellA, userInput_t userInputA);
-        
+        logic [channelWidth:0] tempPix;
+		
         // Add user input to each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInputA[index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + userInputA[index +:channelWidth];
+			if(tempPix >= boundUp) begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
+			end
+			else begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = tempPix;
+			end
 		end
 		
 		// Return result
@@ -70,9 +77,17 @@ package CellProcessingPkg;
     // Inputs: pixelMatrix_t, userInput_t
 	// Output: pixel_t
 	function automatic pixel_t sub (cell_t cellA, cellB);
+		logic [channelWidth:0] tempPix;
+		
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] -= cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			if(tempPix >= boundUp) begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = 0;
+			end
+			else begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = tempPix;
+			end
 		end
 		
 		// Return result
@@ -83,10 +98,17 @@ package CellProcessingPkg;
 	// Inputs: pixelMatrix_t, userInput_t
 	// Output: pixel_t
     function automatic pixel_t subi (cell_t cellA, userInput_t userInputA);
-        
+        logic [channelWidth:0] tempPix;
+		
         // Subtract user input from each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			cellA.pixelMatrix[centerPixel][index +:channelWidth] += userInputA[index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - userInputA[index +:channelWidth];
+			if(tempPix >= boundUp) begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = 0;
+			end
+			else begin
+				cellA.pixelMatrix[centerPixel][index +:channelWidth] = tempPix;
+			end
 		end
 		
 		// Return result
