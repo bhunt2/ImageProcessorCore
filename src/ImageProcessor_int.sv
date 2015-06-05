@@ -1,13 +1,15 @@
-import CellProcessingPkg::cellDepth;
+import CellProcessingPkg::pixelDepth;
 import CellProcessingPkg::opCodeWidth;
+import CellProcessingPkg::pixel_t;
+import CellProcessingPkg::userInputA;
 
 // Interface
-interface cellProcessor_int(input logic clk, rst);
-    logic [cellDepth - 1:0] 		cellA;
-    logic [cellDepth - 1:0] 		cellB;
-    CellProcessingPkg::userInput_t  userInputA;
-    logic [opCodeWidth - 1:0]		opcode;
-    CellProcessingPkg::pixel_t		processedPixel;
+interface ImageProcessor_int(input logic clk, rst);
+    pixel_t 					pixelA;
+    pixel_t 					pixelB;
+    userInput_t  				userInputA;
+    logic [opCodeWidth - 1:0]	opcode;
+    pixel_t						processedPixel;
   
     modport cellPorts ( input  clk,
                         input  rst,

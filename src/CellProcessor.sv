@@ -1,8 +1,24 @@
-/************************************************/
-/* Cell Processor                               */
-/*                                              */
-/************************************************/
-
+// CellProcessor.v - The top level of the cell processor
+//
+// Description:
+// ------------
+// Top level module for a single cell processor
+//
+//
+// Cell Processor Ports
+//  Interface:
+//    cell_t CellA, CellB
+//    userInput_t
+//	  
+//  btnCpuReset 	- CPU RESET Button - System reset.  Asserted low by Nexys 4 board
+//  sw[3:0] 		- Used to switch between cellA input colors.
+//  sw[7:4] 		- Used to switch between cellB input colors.
+//  sw[15:12] 		- Used to switch between possible opcodes.
+//  led[15:0] 		- Light up to show that switch is registered.
+//  7-segment[2:0] 	- Outputs the values of each of the channels in the resulting image.
+//
+// External port names match pin names in the nexys4fpga.xdc constraints file
+///////////////////////////////////////////////////////////////////////////
 module CellProcessor(
 	cellProcessor_int.cellPorts ports
 );
