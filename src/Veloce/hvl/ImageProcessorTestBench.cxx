@@ -1,3 +1,16 @@
+// ImageProcessorTestBench.cxx - HVL for use on the Veloce emulator
+//
+// Author: 			Sean Koppenhafer
+// Date Created: 	20 May 2015
+// 
+// Description:
+// ------------
+//  Takes two hex files that represent input images and builds image buffers
+//  for transferring to emulator through DPI-C. Gets result and builds output
+//  image and outputs it as a hex file.
+//	  
+///////////////////////////////////////////////////////////////////////////
+
 #include "tbxbindings.h"
 #include "svdpi.h"
 #include "stdio.h"
@@ -13,6 +26,8 @@
 
 #define IMAGE_PIXEL_WIDTH 150
 #define BYTES_PER_PIXEL 3
+#define IMAGE_WIDTH_BYTE_COUNT (IMAGE_PIXEL_WIDTH * BYTES_PER_PIXEL)
+#define RESULT_WIDTH_BYTE_COUNT (IMAGE_WIDTH_BYTE_COUNT - (BYTES_PER_PIXEL * 2))
 #define CELLS_PER_WIDTH (IMAGE_PIXEL_WIDTH - 2)
 #define CELLS_PER_IMAGE (CELLS_PER_WIDTH * CELLS_PER_WIDTH)	//The height is the same as the width
 #define PIXELS_PER_RESULT CELLS_PER_IMAGE	//They are the same value
@@ -274,10 +289,24 @@ void print_result_file() {
 	}
 
 	#ifdef PRINT_RESULT_BUFFER
+	printf("\n\nPRINTING Image 1:\n");
+	int counter = 0;
+	for(counter = 0; counter < image1_size; counter++) {
+		if( ((counter % IMAGE_WIDTH_BYTE_COUNT) == 0 ) && (counter != 0))  printf("\n");
+		printf("%02X ", result_buffer[counter]);
+	}
+	printf("\n\n");
+	printf("\n\nPRINTING Image 2:\n");
+	int counter = 0;
+	for(counter = 0; counter < image2_size; counter++) {
+		if( ((counter % IMAGE_WIDTH_BYTE_COUNT) == 0 ) && (counter != 0))  printf("\n");
+		printf("%02X ", result_buffer[counter]);
+	}
+	printf("\n\n");
 	printf("\n\nPRINTING RESULTS:\n");
 	int counter = 0;
 	for(counter = 0; counter < bytes_in_result; counter++) {
-		if( ((counter % 16) == 0 ) && (counter != 0))  printf("\n");
+		if( ((counter % RESULT_WIDTH_BYTE_COUNT) == 0 ) && (counter != 0))  printf("\n");
 		printf("%02X ", result_buffer[counter]);
 	}
 	printf("\n\n");

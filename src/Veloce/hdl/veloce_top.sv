@@ -1,3 +1,17 @@
+// Veloce_top.sv - HDL top level for use on the Veloce emulator
+//
+// Author: 			Sean Koppenhafer
+// Date Created: 	20 May 2015
+// 
+// Description:
+// ------------
+//  The top level module that allows for communication between the Veloce
+//  emulator and server.
+//
+//  Receives cells one pixel at a time and builds the cell to pass to the
+//  cell processor.
+//	  
+///////////////////////////////////////////////////////////////////////////
 
 module veloce_top;
 
