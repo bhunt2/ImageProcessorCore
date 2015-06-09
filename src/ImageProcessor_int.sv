@@ -1,50 +1,51 @@
-// CellProcessor_int.sv - Interface for working with the cell processor.
+// ImageProcesspr_int.sv - Interface for working with the cell processor.
 //
 // Author: 			Benjamin Huntsman
 // Date Created: 	30 April 2015
 // 
 // Description:
 // ------------
-//  This defines the interface for working with the cell processor. Modports
-//  for the cell processor and connecting modules are provided and
+//  This defines the interface for working with the image processor. Modports
+//  for the image processor and connecting modules are provided and
 //  recommended for use.
 //
 //
 // Cell Processor Ports
 //  Interface:
 //      logic    clk, rst
-//    	cell_t   CellA, CellB
+//    	pixel_t  pixelA, pixelB
 //    	pixel_t  userInput
 //	  	opcode_t opcode
 //		pixel_t  processedPixel
 //	  
 ///////////////////////////////////////////////////////////////////////////
 
-import CellProcessingPkg::cellDepth;
+import CellProcessingPkg::pixelDepth;
 import CellProcessingPkg::opCodeWidth;
 import CellProcessingPkg::pixel_t;
+import CellProcessingPkg::userInput_t;
 
 // Interface
-interface cellProcessor_int(input logic clk, rst);
-    logic [cellDepth - 1:0] 	cellA;
-    logic [cellDepth - 1:0] 	cellB;
+interface ImageProcessor_int(input logic clk, rst);
+    pixel_t 					pixelA;
+    pixel_t 					pixelB;
     pixel_t  					userInput;
     logic [opCodeWidth - 1:0]	opcode;
     pixel_t						processedPixel;
   
-    modport cellPorts ( input  clk,
+    modport intPorts (  input  clk,
                         input  rst,
-                        input  cellA,
-                        input  cellB,
+                        input  pixelA,
+                        input  pixelB,
                         input  userInput,
                         input  opcode,
                         output processedPixel
                       );
                       
-    modport imagePorts ( output cellA,
-                         output cellB,
-                         output userInput,
-                         output opcode
-                       );
+    modport extPorts (  output pixelA,
+                        output pixelB,
+                        output userInput,
+                        output opcode
+                      );
                        
 endinterface
