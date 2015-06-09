@@ -14,7 +14,7 @@
 //  Interface:
 //      logic    clk, rst
 //    	pixel_t  pixelA, pixelB
-//    	pixel_t  userInputA
+//    	pixel_t  userInput
 //	  	opcode_t opcode
 //		pixel_t  processedPixel
 //	  
@@ -23,13 +23,13 @@
 import CellProcessingPkg::pixelDepth;
 import CellProcessingPkg::opCodeWidth;
 import CellProcessingPkg::pixel_t;
-import CellProcessingPkg::userInputA;
+import CellProcessingPkg::userInput_t;
 
 // Interface
 interface ImageProcessor_int(input logic clk, rst);
     pixel_t 					pixelA;
     pixel_t 					pixelB;
-    pixel_t  					userInputA;
+    pixel_t  					userInput;
     logic [opCodeWidth - 1:0]	opcode;
     pixel_t						processedPixel;
   
@@ -37,14 +37,14 @@ interface ImageProcessor_int(input logic clk, rst);
                         input  rst,
                         input  pixelA,
                         input  pixelB,
-                        input  userInputA,
+                        input  userInput,
                         input  opcode,
                         output processedPixel
                       );
                       
     modport extPorts (  output pixelA,
                         output pixelB,
-                        output userInputA,
+                        output userInput,
                         output opcode
                       );
                        

@@ -14,26 +14,25 @@
 //  Interface:
 //      logic    clk, rst
 //    	pixel_t  pixelA, pixelB
-//    	pixel_t  userInputA
+//    	pixel_t  userInput
 //	  	opcode_t opcode
 //		pixel_t  processedPixel
 //	  
 ///////////////////////////////////////////////////////////////////////////
 
-import ImageProcessingPkg::*;
-import CellProcessingPkg::*;
 
 module ImageProcessor(
-	input 			clk,
-	input 			rst,
-	input pixel_t 	pixelA,
-	input pixel_t 	pixelB,
-	input opcodes_t opcode,
-	output pixel_t 	result
+	ImageProcessor_int.inports ports
 );
+	// Import Packages
+	import ImageProcessingPkg::*;
+	import CellProcessingPkg::*;
 
 	// Registers for pulling in and buffering data
-	reg [
+    ioBuf_t [1:0] inputShiftReg;			// Input buf for two pixels
+	ioBuf_t [1:0] outputShiftReg;			// Output buf for two pixels
+	pixel_t 					userInput
+	logic [opCodeWidth - 1:0] 	opCodeReg;	// Store opcode for operation
 
     // Bring in the 
     always_comb begin

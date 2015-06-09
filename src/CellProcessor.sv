@@ -14,7 +14,7 @@
 //    Inputs -
 //      logic    clk, rst
 //	  	cell_t   CellA, CellB
-//    	pixel_t  userInputA
+//    	pixel_t  userInput
 //	  	opcode_t opcode
 //    Outputs -
 //		pixel_t  processedPixel
@@ -45,9 +45,9 @@ module CellProcessor(
         else begin
             case (ports.opcode)
                 ADD :   RESULT  = add(cellBlockA, cellBlockB);
-                ADDI:   RESULT  = addi(cellBlockA, ports.userInputA);
+                ADDI:   RESULT  = addi(cellBlockA, ports.userInput);
                 SUB :   RESULT  = sub(cellBlockA, cellBlockB);
-                SUBI:   RESULT  = subi(cellBlockA, ports.userInputA);
+                SUBI:   RESULT  = subi(cellBlockA, ports.userInput);
                 default: RESULT = cellBlockA.pixelMatrix[centerPixel];
             endcase
         end

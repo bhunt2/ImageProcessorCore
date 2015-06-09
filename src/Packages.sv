@@ -21,9 +21,9 @@
 //				else begin
 //					case (ports.opcode)
 //						ADD :   RESULT  = add(cellBlockA, cellBlockB);
-//						ADDI:   RESULT  = addi(cellBlockA, ports.userInputA);
+//						ADDI:   RESULT  = addi(cellBlockA, ports.userInput);
 //						SUB :   RESULT  = sub(cellBlockA, cellBlockB);
-//						SUBI:   RESULT  = subi(cellBlockA, ports.userInputA);
+//						SUBI:   RESULT  = subi(cellBlockA, ports.userInput);
 //						default: RESULT = cellBlockA.pixelMatrix[centerPixel];
 //					endcase
 //				end
@@ -93,12 +93,12 @@ package CellProcessingPkg;
     // Function for adding a cell's center pixel with an immediate user input
 	// Inputs: cell_t, pixel_t
 	// Output: pixel_t
-    function automatic pixel_t addi (cell_t cellA, pixel_t userInputA);
+    function automatic pixel_t addi (cell_t cellA, pixel_t userInput);
         logic [channelWidth:0] tempPix;
 		
         // Add user input to each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + userInputA[index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + userInput[index +:channelWidth];
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
 			end
@@ -135,12 +135,12 @@ package CellProcessingPkg;
     // Function for subtracting a user's input from a cell's center pixel
 	// Inputs: cell_t, pixel_t
 	// Output: pixel_t
-    function automatic pixel_t subi (cell_t cellA, pixel_t userInputA);
+    function automatic pixel_t subi (cell_t cellA, pixel_t userInput);
         logic [channelWidth:0] tempPix;
 		
         // Subtract user input from each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
-			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - userInputA[index +:channelWidth];
+			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - userInput[index +:channelWidth];
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = 0;
 			end
@@ -199,7 +199,7 @@ package ImageProcessingPkg;
     typedef struct packed{
 		pixel_t 	pixelA;
 		pixel_t	    pixelB;
-		userInput_t userInputA;
+		userInput_t userInput;
         opcodes_t 	opcode;
     } instruction_t;
 

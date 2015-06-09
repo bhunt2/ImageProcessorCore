@@ -14,7 +14,7 @@
 //  Interface:
 //      logic    clk, rst
 //    	cell_t   CellA, CellB
-//    	pixel_t  userInputA
+//    	pixel_t  userInput
 //	  	opcode_t opcode
 //		pixel_t  processedPixel
 //	  
@@ -28,7 +28,7 @@ import CellProcessingPkg::pixel_t;
 interface cellProcessor_int(input logic clk, rst);
     logic [cellDepth - 1:0] 	cellA;
     logic [cellDepth - 1:0] 	cellB;
-    pixel_t  					userInputA;
+    pixel_t  					userInput;
     logic [opCodeWidth - 1:0]	opcode;
     pixel_t						processedPixel;
   
@@ -36,14 +36,14 @@ interface cellProcessor_int(input logic clk, rst);
                         input  rst,
                         input  cellA,
                         input  cellB,
-                        input  userInputA,
+                        input  userInput,
                         input  opcode,
                         output processedPixel
                       );
                       
     modport imagePorts ( output cellA,
                          output cellB,
-                         output userInputA,
+                         output userInput,
                          output opcode
                        );
                        
