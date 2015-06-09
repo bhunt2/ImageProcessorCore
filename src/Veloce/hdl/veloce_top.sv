@@ -5,7 +5,7 @@ module veloce_top;
 	reg clk, rst;
 	bit [cellDepth - 1:0]	cellA;
     bit [cellDepth - 1:0]	cellB;
-	pixel_t 				userInputA;
+	pixel_t 				userInput;
 	opcodes_t 				opcode = ADD;
 	pixel_t 				processedPixel;
 	integer 				done, counter, shift_amount;
@@ -90,7 +90,7 @@ module veloce_top;
 	
 	assign cell_int.cellA		= cellA;
 	assign cell_int.cellB		= cellB;
-	assign cell_int.userInputA  = userInputA;
+	assign cell_int.userInput   = userInput;
 	assign cell_int.opcode		= opcode;
 	assign processedPixel 		= cell_int.processedPixel;
 
