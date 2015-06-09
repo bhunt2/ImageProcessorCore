@@ -4,11 +4,11 @@ module veloce_top;
 	import CellProcessingPkg::*;
 	reg clk, rst;
 	bit [cellDepth - 1:0]	cellA;
-   bit [cellDepth - 1:0]	cellB;
-	userInput_t userInputA;
-	opcodes_t opcode = ADD;
-	pixel_t processedPixel;
-	integer done, counter, shift_amount;
+    bit [cellDepth - 1:0]	cellB;
+	pixel_t 				userInputA;
+	opcodes_t 				opcode = ADD;
+	pixel_t 				processedPixel;
+	integer 				done, counter, shift_amount;
 
 	bit [31:0] temp_pixelA;
 	bit [31:0] temp_pixelB;
