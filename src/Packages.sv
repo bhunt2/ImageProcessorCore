@@ -186,7 +186,6 @@ package ImageProcessingPkg;
 	import CellProcessingPkg::cellN;
 	import CellProcessingPkg::centerPixel;
 	import CellProcessingPkg::opcodes_t;
-	import CellProcessingPkg::userInput_t;
 	
 	// Parameters for building an image
 	parameter imageWidth 	= 640;
@@ -200,7 +199,7 @@ package ImageProcessingPkg;
     typedef struct packed{
 		pixel_t 	pixelA;
 		pixel_t	    pixelB;
-		userInput_t userInput;
+		pixel_t		userInput;
         opcodes_t 	opcode;
     } instruction_t;
 
