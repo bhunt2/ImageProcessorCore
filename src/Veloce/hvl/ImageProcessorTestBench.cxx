@@ -297,14 +297,14 @@ void print_result_file() {
 	}
 	printf("\n\n");
 	printf("\n\nPRINTING Image 2:\n");
-	int counter = 0;
+	
 	for(counter = 0; counter < image2_size; counter++) {
 		if( ((counter % IMAGE_WIDTH_BYTE_COUNT) == 0 ) && (counter != 0))  printf("\n");
 		printf("%02X ", result_buffer[counter]);
 	}
 	printf("\n\n");
 	printf("\n\nPRINTING RESULTS:\n");
-	int counter = 0;
+	
 	for(counter = 0; counter < bytes_in_result; counter++) {
 		if( ((counter % RESULT_WIDTH_BYTE_COUNT) == 0 ) && (counter != 0))  printf("\n");
 		printf("%02X ", result_buffer[counter]);
