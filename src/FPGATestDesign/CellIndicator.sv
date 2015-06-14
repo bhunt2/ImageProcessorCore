@@ -66,7 +66,7 @@ module CellIndicator
     end
     
     // Setup next state logic for cellA
-	assign ports.cellA.singleCell = {cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS};
+	assign ports.cellA = {cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS,cellACS};
     always @(*) begin
         case (DebouncedSwitches[3:0])
             4'b0001: cellANS = BLACK;
@@ -78,7 +78,7 @@ module CellIndicator
     end
 	
 	// Setup next state logic for cellB
-	assign ports.cellB.singleCell = {cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS};
+	assign ports.cellB = {cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS,cellBCS};
     always @(*) begin
         case (DebouncedSwitches[7:4])
             4'b0001: cellBNS = BLACK;

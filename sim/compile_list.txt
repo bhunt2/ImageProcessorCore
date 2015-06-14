@@ -1,5 +1,5 @@
 ../src/Packages.sv
 ../src/CellProcessor_int.sv
 ../src/CellProcessor.sv
-../src/veloce_top.sv
+ImageProcessorTestBench.sv
 
