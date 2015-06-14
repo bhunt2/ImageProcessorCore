@@ -10,13 +10,17 @@
 //  recommended for use.
 //
 //
-// Cell Processor Ports
+//  Cell Processor Ports
 //  Interface:
 //      logic    clk, rst
 //    	cell_t   CellA, CellB
 //    	pixel_t  userInput
 //	  	opcode_t opcode
 //		pixel_t  processedPixel
+//
+//	Modports:
+//		cellPorts 	- for use with a cell processor
+//		imagePorts	- for use with the connecting module (Image Processor)
 //	  
 ///////////////////////////////////////////////////////////////////////////
 

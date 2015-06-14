@@ -10,6 +10,15 @@
 //  parameterization of design. Also, functions for each of the operations
 //  accomplished by the cell processor.
 //
+//	Configuring the Cell Processor:
+//		At the beginning of the cell processor package are the parameters for
+//      configuring the cell processor. There are four parameters to use to
+//		do so. The other parameters are automatically defined by these four.
+//			opCodeWidth:	Bit width for the operation code
+//          channelWidth:	Bit width for the color channels
+//          channelNum:		Number of color channels. Allows the use of any color space.
+//	        cellN:			A cell is made of an N x N matrix of pixels
+//		
 //  Use of functions:
 //		The functions receive one cell, two cells, or
 //      a cell and a pixel as inputs. To use them you
@@ -55,15 +64,18 @@ package CellProcessingPkg;
 	parameter boundUp		= 1 << channelWidth + 1;
 
     // type definition enumeration for opcodes
+	// Add new operations into the enumeration
     typedef enum logic [opCodeWidth - 1:0] {ADD, ADDI, SUB, SUBI, MULT, MULTI, DIV2, INV, AND, OR, NOR, AVG} opcodes_t;
 
     // type definition for color channel
+	// Not currently used due to current synthesis rules of structs
     typedef logic [channelWidth - 1:0] colorChannel_t;
 
 	// type definition for a pixel
 	typedef logic [pixelDepth - 1:0] pixel_t;
 	
 	// type definition for a cell
+	// A union i used to allow for assigning value to a single pixel or the entire cell
 	typedef union packed{
 		logic	[cellDepth - 1:0]		singleCell;
 		pixel_t [cellN * cellN - 1:0]	pixelMatrix; 
@@ -78,6 +90,7 @@ package CellProcessingPkg;
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
 			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			// Check upper bound by seeing if result rolls over
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
 			end
@@ -100,6 +113,7 @@ package CellProcessingPkg;
         // Add user input to each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
 			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] + userInput[index +:channelWidth];
+			// Check lower bound, by seeing if result rolls over
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = ~0;
 			end
@@ -121,6 +135,7 @@ package CellProcessingPkg;
 		// Add each color channel in center pixel of cellA to corresponding pixel color channel of cellB
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
 			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - cellB.pixelMatrix[centerPixel][index +:channelWidth];
+			// Check lower bound, by seeing if result rolls under
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = 0;
 			end
@@ -142,6 +157,7 @@ package CellProcessingPkg;
         // Subtract user input from each color channel in center pixel of cellA
 		for (int index = 0; index <= pixelDepth; index += channelWidth) begin
 			tempPix = cellA.pixelMatrix[centerPixel][index +:channelWidth] - userInput[index +:channelWidth];
+			// Check lower bound, by seeing if result rolls under
 			if(tempPix >= boundUp) begin
 				cellA.pixelMatrix[centerPixel][index +:channelWidth] = 0;
 			end
@@ -157,6 +173,8 @@ package CellProcessingPkg;
 	// Function for averaging all pixels within a cell
 	// Inputs: cell_t
 	// Output: pixel_t
+	// Note: this is not currently in use because it is not parameterized and does
+	//   not perform the operation correctly.
     function automatic pixel_t avg (cell_t cellA);
         // variable for storing the sum for output
 		integer redSum, greenSum, blueSum;
@@ -189,7 +207,7 @@ package ImageProcessingPkg;
 	
 	// Parameters for building an image
 	parameter imageWidth 	= 640;
-	parameter imageHeighth 	= 480;
+	parameter imageHeight	= 480;
 	
 	// type definition for an image
 	typedef pixel_t [imageWidth - 1:0] ioBuf_t;
